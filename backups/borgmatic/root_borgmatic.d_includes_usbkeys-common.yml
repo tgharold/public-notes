@@ -1,0 +1,46 @@
+# /root/borgmatic.d/includes/usbkeys-common.yml
+# https://torsion.org/borgmatic/docs/
+
+location:
+  source_directories:
+    - /etc
+    - /root
+    - /usr/local
+    - /var/backups
+    - /var/spool/anacron
+    - /var/spool/cron
+    - /home/*/bin
+    - /home/*/.ssh
+    - /home/*/.gnupg
+    - /home/*/.config/borg
+  exclude_patterns:
+    - '/root/.cache'
+
+storage:
+  compression: auto,zstd
+  retries: 0
+  retry_wait: 0
+  lock_wait: 30
+  archive_name_format: '{hostname}-{user}-{now:%Y%m%d-%H%M%S}'
+  relocated_repo_access_is_ok: true
+
+retention:
+  keep_within: 12H
+  keep_secondly: 10
+  keep_minutely: 15
+  keep_hourly: 72
+  keep_daily: 45
+  keep_weekly: 60
+  keep_monthly: 40
+  keep_yearly: 25
+
+consistency:
+  check_last: 10
+  checks:
+    - name: extract
+    - name: archives
+      frequency: 1 days
+    - name: repository
+      frequency: 11 days
+    - name: data
+      frequency: 45 days

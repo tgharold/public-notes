@@ -1,0 +1,15 @@
+# /root/borgmatic.d/usbkeys/media-tgh-USB322FD2-borgmatic2.yaml
+# "/media/tgh/USB322FD2" is the mount point when the USB key is present
+
+<<: !include /root/borgmatic.d/includes/usbkeys-common.yml
+
+location:
+  repositories:
+    - /media/tgh/USB322FD2/backups/t15p/root/root-borgmatic2.borg
+
+hooks:
+  before_actions:
+    - /usr/bin/findmnt /media/tgh/USB322FD2 > /dev/null || exit 75
+
+storage:
+  <<: !include /root/secrets/borgmatic-keys/USB322FD2-borgmatic2.yaml
